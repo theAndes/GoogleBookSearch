@@ -52,42 +52,61 @@ class Books extends Component {
   render() {
     return (
       <Container fluid>
-        <Row>
-          <Col size="md-6">
-            <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-            </Jumbotron>
-            <form>
-              <Input
-                value={this.state.search}
-                onChange={this.handleInputChange}
-                name="search"
-                placeholder="Title (required)"
-              />
+        <Jumbotron>
+          <h1>What Books Should I Read?</h1>
+          <Row>
+            <Col size="md-2" />
 
-              <FormBtn
-                disabled={!this.state.search}
-                onClick={this.handleFormSubmit}
-              >
-                Search Book
-              </FormBtn>
-            </form>
-          </Col>
-          <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
-            </Jumbotron>
+            <Col size="md-8">
+              <form>
+                <Input
+                  value={this.state.search}
+                  onChange={this.handleInputChange}
+                  name="search"
+                  placeholder="Title (required)"
+                />
+
+                <FormBtn
+                  disabled={!this.state.search}
+                  onClick={this.handleFormSubmit}
+                >
+                  Search Book
+                </FormBtn>
+              </form>
+            </Col>
+          </Row>
+        </Jumbotron>
+        <Row>
+          <Col size="md-2" />
+          <Col size="md-8">
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
                   <ListItem key={book.id}>
-                    <Link to={'/books/' + book.id}>
-                      <strong>
-                        {book.volumeInfo.title} by {book.volumeInfo.authors}
-                      </strong>
-                    </Link>
-                    {/* needs to be changed to save book button */}
-                    <DeleteBtn onClick={() => this.deleteBook(book.id)} />
+                    <Row>
+                      <Col size="md-9">
+                        <a href={book.volumeInfo.previewLink} target="_blank">
+                          <strong>
+                            {book.volumeInfo.title} by {book.volumeInfo.authors}
+                          </strong>
+                        </a>
+
+                        <p> {book.volumeInfo.description}</p>
+
+                        <DeleteBtn onClick={() => this.deleteBook(book.id)} />
+
+                        {/* <Col size="4 md-2 image" /> */}
+
+                        {/* needs to be changed to save book button */}
+                      </Col>
+                      <Col size="md-3">
+                        <img
+                          className="float-right"
+                          src={book.volumeInfo.imageLinks.thumbnail}
+                          alt={book.volumeInfo.title}
+                        />
+                      </Col>
+                    </Row>
                   </ListItem>
                 ))}
               </List>
