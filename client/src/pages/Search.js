@@ -13,6 +13,12 @@ class Books extends Component {
     search: ''
   };
 
+  saveBook = data => {
+    API.saveBook(data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
+
   componentDidMount() {
     API.searchBook('clean code')
       .then(res => {
@@ -93,7 +99,21 @@ class Books extends Component {
 
                         <p> {book.volumeInfo.description}</p>
 
-                        <DeleteBtn onClick={() => this.deleteBook(book.id)} />
+                        <DeleteBtn
+                          onClick={() =>
+                            this.saveBook({
+                              title: book.volumeInfo.title,
+                              author: book.volumeInfo.authors,
+                              synopsis: book.volumeInfo.description,
+                              image: book.volumeInfo.imageLinks
+                                ? book.volumeInfo.imageLinks.thumbnail
+                                : `http://books.google.com/books/content?id=${
+                                    book.id
+                                  }&printsec=frontcover&img=1&zoom=1&source=gbs_api`,
+                              link: book.volumeInfo.previewLink
+                            })
+                          }
+                        />
 
                         {/* <Col size="4 md-2 image" /> */}
 
@@ -102,7 +122,13 @@ class Books extends Component {
                       <Col size="md-3">
                         <img
                           className="float-right"
-                          src={book.volumeInfo.imageLinks.thumbnail}
+                          src={
+                            book.volumeInfo.imageLinks
+                              ? book.volumeInfo.imageLinks.thumbnail
+                              : `http://books.google.com/books/content?id=${
+                                  book.id
+                                }&printsec=frontcover&img=1&zoom=1&source=gbs_api`
+                          }
                           alt={book.volumeInfo.title}
                         />
                       </Col>
