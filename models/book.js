@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
+  saved: false,
   title: { type: String, required: true },
   author: { type: Array, required: true },
   synopsis: String,

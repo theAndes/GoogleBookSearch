@@ -16,11 +16,14 @@ if (process.env.NODE_ENV === 'production') {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/Googlereadinglist'
-);
+
+var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/Googlereadinglist';
+mongoose.connect(MONGODB_URI, function (error) {
+  // Check error in initial connection. There is no 2nd param to the callback.
+  if (error) return error;
+});
 
 // Start the API server
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });

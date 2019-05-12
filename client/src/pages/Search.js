@@ -13,6 +13,8 @@ class Books extends Component {
     search: ''
   };
 
+
+
   saveBook = data => {
     console.log(data);
 
@@ -102,16 +104,19 @@ class Books extends Component {
                         <p> {book.volumeInfo.description}</p>
 
                         <DeleteBtn
+
+
                           onClick={() =>
                             this.saveBook({
+                              saved: book.id,
                               title: book.volumeInfo.title,
                               author: book.volumeInfo.authors,
                               synopsis: book.volumeInfo.description,
                               image: book.volumeInfo.imageLinks
                                 ? book.volumeInfo.imageLinks.thumbnail
                                 : `http://books.google.com/books/content?id=${
-                                    book.id
-                                  }&printsec=frontcover&img=1&zoom=1&source=gbs_api`,
+                                book.id
+                                }&printsec=frontcover&img=1&zoom=1&source=gbs_api`,
                               link: book.volumeInfo.previewLink
                             })
                           }
@@ -128,8 +133,8 @@ class Books extends Component {
                             book.volumeInfo.imageLinks
                               ? book.volumeInfo.imageLinks.thumbnail
                               : `http://books.google.com/books/content?id=${
-                                  book.id
-                                }&printsec=frontcover&img=1&zoom=1&source=gbs_api`
+                              book.id
+                              }&printsec=frontcover&img=1&zoom=1&source=gbs_api`
                           }
                           alt={book.volumeInfo.title}
                         />
@@ -139,8 +144,8 @@ class Books extends Component {
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
-            )}
+                <h3>No Results to Display</h3>
+              )}
           </Col>
         </Row>
       </Container>
