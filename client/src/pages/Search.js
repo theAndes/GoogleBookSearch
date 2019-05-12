@@ -17,7 +17,7 @@ class Books extends Component {
 
   saveBook = data => {
     console.log(data);
-
+    this.setState({ saved: true, id: data.id })
     API.saveBook(data)
       .then(res => console.log(res))
       .catch(err => console.log(err));
@@ -103,12 +103,12 @@ class Books extends Component {
 
                         <p> {book.volumeInfo.description}</p>
 
-                        <DeleteBtn
+                        <DeleteBtn disabled={this.state.saved && this.state.id === book.id}
 
 
                           onClick={() =>
                             this.saveBook({
-                              saved: book.id,
+                              id: book.id,
                               title: book.volumeInfo.title,
                               author: book.volumeInfo.authors,
                               synopsis: book.volumeInfo.description,
